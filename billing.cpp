@@ -185,6 +185,114 @@ void shopping :: add(){
 
 }
 
+void shopping :: edit()
+{
+    fstream data, data1;
+    int pkey;
+    int token = 0;
+    int c;
+    float p;
+    float d;
+    string n;
+
+    cout<<"\n\t\t\t Modify the record"<<endl;
+    cout<<"\n\t\t\t enter product code :";
+    cin>>pkey;
+
+    data.open("database.txt", ios::in);
+
+    if( !data){
+        cout<<"\n\n Data is not exists "<<endl;
+    }
+    else 
+    {
+        data1.open("database1.txt", ios::app|ios::out);
+        data>>pcode>>pname>>price>>dis;
+
+        while(!data.eof())
+        {
+            if(pkey == pcode)
+            {
+                cout<<"\n\t\t Procduct new code : ";
+                cin>>c;
+                cout<<"\n\t\t Name of product :";
+                cin>>n;
+                cout<<"\n\t\t Price :";
+                cin>>p;
+                cout<<"\n\t\t Discount :";
+                cin>>d;
+                data1<<" "<<c<<" "<<n<<" "<<p<<" "<<d<<"\n";
+                cout<<"\n\t\t Record has edited : ";
+                token++;
+            }
+            else 
+            {
+                data1<<" "<<pcode<<" "<<pname<<" "<<price<<" "<<dis<<"\n";
+            }
+            data>>pcode>>pname>>price>>dis;
+        }
+        data.close();
+        data1.close();
+        remove("database.txt");
+        rename("database1.txt", "database.txt");
+
+        if( token == 0)
+        cout<<"\n\t\t\t record has not found"<<endl;
+
+    }
+
+}
+
+void shopping :: rem()
+{
+    fstream data, data1;
+    int pkey;
+    int token = 0;
+
+    cout<<"\n\n \t Dalete Product ";
+    cout<<"\n\t Enter product code :";
+    cin>>pkey;
+
+    data.open("database.txt", ios::in);
+
+    if( !data)
+    {
+        cout<<"\nFile does not exist ";
+
+    }
+    else 
+    {
+        data1.open("database.txt", ios:: app | ios::out);
+        data>>pcode>>pname>>price>>dis;
+        while( !data.eof())
+        {
+            if( pkey == pcode )
+            {
+                cout <<"\n\t\t Product Deleted successfully";
+                token++;
+            }
+            else 
+            {
+                data1<<" "<<pcode<<" "<<pname <<" "<<price<<" "<<dis<<"\n";
+
+            }
+            data>>pcode>>pname>>price>>dis;
+        }
+
+        data.close();
+        data1.close();
+        remove("database.txt");
+        rename("database1.txt", "database.txt");
+
+        if( token == 0)
+        {
+            cout<<"\n\n Record is not found";
+        }
+
+    }
+    
+}
+
 int main()
 {
      shopping s;
